@@ -11,6 +11,8 @@
   "dependencies": {
     "@truffle/hdwallet-provider": "^2.0.6",
     "dotenv": "^16.0.0",
+    "gh-pages": "^3.2.3",
     "solc": "^0.8.13"
   }
+
 }
