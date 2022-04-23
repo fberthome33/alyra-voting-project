@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/fberthome33/alyra-voting-project/static/css/main.b100e6da.chunk.css",
-    "main.js": "/fberthome33/alyra-voting-project/static/js/main.559ec275.chunk.js",
-    "main.js.map": "/fberthome33/alyra-voting-project/static/js/main.559ec275.chunk.js.map",
-    "runtime-main.js": "/fberthome33/alyra-voting-project/static/js/runtime-main.120ecbd5.js",
-    "runtime-main.js.map": "/fberthome33/alyra-voting-project/static/js/runtime-main.120ecbd5.js.map",
-    "static/css/2.3661fc73.chunk.css": "/fberthome33/alyra-voting-project/static/css/2.3661fc73.chunk.css",
-    "static/js/2.bdeb45c1.chunk.js": "/fberthome33/alyra-voting-project/static/js/2.bdeb45c1.chunk.js",
-    "static/js/2.bdeb45c1.chunk.js.map": "/fberthome33/alyra-voting-project/static/js/2.bdeb45c1.chunk.js.map",
-    "index.html": "/fberthome33/alyra-voting-project/index.html",
-    "precache-manifest.fe113cf71b762e593683c691a8b4ae32.js": "/fberthome33/alyra-voting-project/precache-manifest.fe113cf71b762e593683c691a8b4ae32.js",
-    "service-worker.js": "/fberthome33/alyra-voting-project/service-worker.js",
-    "static/css/2.3661fc73.chunk.css.map": "/fberthome33/alyra-voting-project/static/css/2.3661fc73.chunk.css.map",
-    "static/css/main.b100e6da.chunk.css.map": "/fberthome33/alyra-voting-project/static/css/main.b100e6da.chunk.css.map"
+    "main.css": "/static/css/main.b100e6da.chunk.css",
+    "main.js": "/static/js/main.7d14db5c.chunk.js",
+    "main.js.map": "/static/js/main.7d14db5c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b5d1efea.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b5d1efea.js.map",
+    "static/css/2.3661fc73.chunk.css": "/static/css/2.3661fc73.chunk.css",
+    "static/js/2.eecc0786.chunk.js": "/static/js/2.eecc0786.chunk.js",
+    "static/js/2.eecc0786.chunk.js.map": "/static/js/2.eecc0786.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.193dfc3dc9254a49f9183504f2f3d919.js": "/precache-manifest.193dfc3dc9254a49f9183504f2f3d919.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.3661fc73.chunk.css.map": "/static/css/2.3661fc73.chunk.css.map",
+    "static/css/main.b100e6da.chunk.css.map": "/static/css/main.b100e6da.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.120ecbd5.js",
+    "static/js/runtime-main.b5d1efea.js",
     "static/css/2.3661fc73.chunk.css",
-    "static/js/2.bdeb45c1.chunk.js",
+    "static/js/2.eecc0786.chunk.js",
     "static/css/main.b100e6da.chunk.css",
-    "static/js/main.559ec275.chunk.js"
+    "static/js/main.7d14db5c.chunk.js"
   ]
 }
