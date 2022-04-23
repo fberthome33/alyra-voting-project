@@ -14,7 +14,8 @@
     "react-stepper-horizontal": "^1.0.11",
     "web3": "^1.6.1"
   },
-  "homepage": "https://fberthome33.github.com/alyra-voting-project",
+  "homepage": "https://fberthome33.github.io/alyra-voting-project",
+               
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
