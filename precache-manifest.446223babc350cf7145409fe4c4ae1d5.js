@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b77c85286e174bd5cc0cdf1e5e2dc1f9",
+    "revision": "cd6a3986bd7f18cd2c23db45f7e56422",
     "url": "/alyra-voting-project/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/alyra-voting-project/static/css/2.3661fc73.chunk.css"
   },
   {
-    "revision": "bd39695f3d2c2ddba103",
+    "revision": "b67a887cadc86dcd3413",
     "url": "/alyra-voting-project/static/css/main.b100e6da.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/alyra-voting-project/static/js/2.f56c1358.chunk.js"
   },
   {
-    "revision": "bd39695f3d2c2ddba103",
-    "url": "/alyra-voting-project/static/js/main.756f158f.chunk.js"
+    "revision": "b67a887cadc86dcd3413",
+    "url": "/alyra-voting-project/static/js/main.d4ac89e4.chunk.js"
   },
   {
     "revision": "08caa0680ad2ecad9e06",
