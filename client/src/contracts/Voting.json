@@ -23965,98 +23965,14 @@
   },
   "networks": {
     "42": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        },
-        "0x92e393e9b54e2f801d3ea4beb0c5e71a21cc34a5d34b77d0fb8a3aa1650dc18f": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "proposalId",
-              "type": "uint256"
-            }
-          ],
-          "name": "ProposalRegistered",
-          "type": "event"
-        },
-        "0x4d99b957a2bc29a30ebd96a7be8e68fe50a3c701db28a91436490b7d53870ca4": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "voter",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "proposalId",
-              "type": "uint256"
-            }
-          ],
-          "name": "Voted",
-          "type": "event"
-        },
-        "0xb6be2187d059cc2a55fe29e0e503b566e1e0f8c8780096e185429350acffd3dd": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "voterAddress",
-              "type": "address"
-            }
-          ],
-          "name": "VoterRegistered",
-          "type": "event"
-        },
-        "0x0a97a4ee45751e2abf3e4fc8946939630b11b371ea8ae39ccdc3056e98f5cc3f": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "enum Voting.WorkflowStatus",
-              "name": "previousStatus",
-              "type": "uint8"
-            },
-            {
-              "indexed": false,
-              "internalType": "enum Voting.WorkflowStatus",
-              "name": "newStatus",
-              "type": "uint8"
-            }
-          ],
-          "name": "WorkflowStatusChange",
-          "type": "event"
-        }
-      },
+      "events": {},
       "links": {},
-      "address": "0x33cAEa3413F04A2997d1a6fAc2718b72EC98A1Ad",
-      "transactionHash": "0x250f238811d9090ef3c686421ce71bcdb1a35356cd9b6d54c7cf40623086b1e1"
+      "address": "0x85De839D82D7714EAa1A882BD97bc5bEA08e7aCC",
+      "transactionHash": "0x3aa192b6ad096f00ab01ec7835f6697e8398cba12b5f61c2d57d0dcb8aaf011c"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-24T15:30:02.991Z",
+  "updatedAt": "2022-04-24T16:18:02.500Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Fabien Berthomé",
