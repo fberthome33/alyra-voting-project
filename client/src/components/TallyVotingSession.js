@@ -28,7 +28,7 @@ export default class TallyVotingSession extends React.Component {
       await contract.methods.tallyVotes().send({ from: accounts[0] });
 
       this.props.state.winningProposalID = Number(await contract.methods.winningProposalID().call());
-      this.props.state.workflowStatus  = Number(await instance.methods.workflowStatus().call());
+      this.props.state.workflowStatus  = Number(await contract.methods.workflowStatus().call());
     }
 
     render(){
