@@ -92,7 +92,7 @@ const [stateProposal, setStateProposal] = useState({ listProposal: [], winningPr
                     <Form.Control type="text" id="proposal"
                       ref={(input) => { state.proposalId = input; } } />
                   </Form.Group>
-                  <Button onClick={this.tallyVotes} variant="dark"> Tally Vote </Button>
+                  <Button onClick={tallyVotes} variant="dark"> Tally Vote </Button>
                 </Card.Body>
               </Card>
             </div>
