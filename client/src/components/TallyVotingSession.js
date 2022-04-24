@@ -1,9 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
 
 export default class TallyVotingSession extends React.Component {
 
@@ -16,7 +14,7 @@ export default class TallyVotingSession extends React.Component {
 
     setVote = async (e) => {
       e.preventDefault();
-      const { accounts, contract, owner, listAddress } = this.props.state;
+      const { accounts, contract } = this.props.state;
       let newProposalDesc = this.props.state.proposalId.value;
       await contract.methods.setVote(newProposalDesc).send({ from: accounts[0] });
 
@@ -25,9 +23,12 @@ export default class TallyVotingSession extends React.Component {
 
     tallyVotes = async (e) => {
       e.preventDefault();
-      const { accounts, contract, owner, listAddress } = this.props.state;
+      const { accounts, contract } = this.props.state;
       //let newProposalDesc = this.props.state.proposalId.value;
       await contract.methods.tallyVotes().send({ from: accounts[0] });
+
+      this.props.state.winningProposalID = Number(await contract.methods.winningProposalID().call());
+      this.props.state.workflowStatus  = Number(await instance.methods.workflowStatus().call());
     }
 
     render(){
@@ -55,7 +56,7 @@ export default class TallyVotingSession extends React.Component {
                   voteCount: {this.props.state.listProposal[this.props.state.winningProposalID]?.voteCount}
                 </strong>
               }
-              { this.props.state.workflowStatus === 5 && this.props.state.accounts && this.props.state.accounts[0] && this.props.state.accounts[0] == this.props.state.owner &&
+              { this.props.state.workflowStatus === 5 && this.props.state.accounts && this.props.state.accounts[0] && this.props.state.accounts[0] === this.props.state.owner &&
                 <strong>
                   {this.props.state.winningProposalID}
                 </strong>
@@ -63,7 +64,8 @@ export default class TallyVotingSession extends React.Component {
               </Card.Body>
             </Card>
           </div><br></br>
-          { this.props.state.workflowStatus === 4 && 
+          { this.props.state.accounts && this.props.state.accounts[0] && this.props.state.accounts[0] === this.props.state.owner &&
+           this.props.state.workflowStatus === 4 && 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Card style={{ width: '50rem' }}>
                 <Card.Header><strong>Tally Vote</strong></Card.Header>

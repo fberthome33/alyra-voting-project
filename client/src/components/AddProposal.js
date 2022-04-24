@@ -1,32 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import { Proposal } from '../Proposal';
 
-export default class AddProposal extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-
-
-    }
+function AddProposal ({
+    state
+}) {
+  const [stateProposal, setStateProposal] = useState({ listProposal: []});
+  const [setProposalEventValue, setSetProposalEventValue] = useState (0)
 
 
-    addProposal = async (e) => {
+  useEffect(() => {
+    (async function () {
+      try {
+        let options = {
+          fromBlock: 0,                  //Number || "earliest" || "pending" || "latest"
+          toBlock: 'latest'
+        };
+        const listProposalEvents = (await state.contract.getPastEvents('ProposalRegistered', options));
+        const listProposal = [];
+        listProposalEvents.forEach(async(indexProps) => 
+        { 
+          console.log(indexProps.returnValues.proposalId)
+          const proposal =  await state.contract.methods.getOneProposal(Number(indexProps.returnValues.proposalId)).call({ from: state.accounts[0]});
+          listProposal.push(new Proposal(Number(indexProps.returnValues.proposalId), proposal.description, proposal.voteCount ));
+          setStateProposal(s => ({...s, listProposal: listProposal}))
+          console.log(listProposal);
+        });
+
+        state.contract.events.ProposalRegistered()
+          .on('data', event => {
+            let value = event.returnValues.proposalId;
+            console.log(value);
+
+            state.contract.methods.getOneProposal(Number(value)).call({ from: state.accounts[0]}).then((proposal) => {
+              const newProps = new Proposal(Number(value), proposal.description, proposal.voteCount )
+              setSetProposalEventValue(newProps);
+            })
+          })
+
+        setStateProposal(s => ({...s, listProposal: listProposal}))
+      } catch (error) {
+        // Catch any errors for any of the above operations.
+        alert(
+          `Failed to init proposal component.`,
+        );
+        console.error(error);
+      }
+    })();
+  }, [])
+
+  useEffect(()=> {
+    console.log(stateProposal);
+    const { listProposal } = stateProposal;
+    listProposal.push(setProposalEventValue);
+    setStateProposal(s => ({...s, listProposal: listProposal}))
+  }, [setProposalEventValue])
+
+
+    const addProposal = async (e) => {
       e.preventDefault();
-      const { accounts, contract, owner, listAddress } = this.props.state;
-      let newProposalDesc = this.props.state.proposal.value;
+      const { accounts, contract, owner, listAddress } = state;
+      let newProposalDesc = state.proposal.value;
       await contract.methods.addProposal(newProposalDesc).send({ from: accounts[0] });
-
-
-
-
     }
 
-    render(){
         return(
       <><div style={{ display: 'flex', justifyContent: 'center' }}>
 
@@ -43,8 +84,8 @@ export default class AddProposal extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {this.props.state.listProposal !== null &&
-                          this.props.state.listProposal.map((proposal) => (
+                        {stateProposal.listProposal !== null &&
+                          stateProposal.listProposal.map((proposal) => (
                             <tr><td>{proposal.id}</td><td>{proposal.description}</td></tr>
                           ))}
                       </tbody>
@@ -53,20 +94,26 @@ export default class AddProposal extends React.Component {
                 </ListGroup>
               </Card.Body>
             </Card>
-          </div><br></br><div style={{ display: 'flex', justifyContent: 'center' }}>
+          </div>
+          
+          { state.voter &&
+          <>
+          <br></br>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Card style={{ width: '50rem' }}>
                 <Card.Header><strong>Add a proposal</strong></Card.Header>
                 <Card.Body>
                   <Form.Group controlId="formProposal">
                     <Form.Label>Proposal Description</Form.Label>
                     <Form.Control type="text" id="proposal" placeholder="Enter proposal description" 
-                      ref={(input) => { this.props.state.proposal = input; } } />
+                      ref={(input) => { state.proposal = input; } } />
                   </Form.Group>
-                  <Button onClick={this.addProposal} variant="dark"> Add </Button>
+                  <Button onClick={addProposal} variant="dark"> Add </Button>
                 </Card.Body>
               </Card>
-            </div></>
+            </div>
+            </>
+          }</>
         )
     }
-
-}
+    export default AddProposal;

@@ -2,11 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Voting from "./contracts/Voting.json";
 import getWeb3 from "./getWeb3";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Table from 'react-bootstrap/Table';
 import Stepper from 'react-stepper-horizontal';
 import "./App.css";
 import AddVoter from "./components/AddVoter";
@@ -16,11 +11,7 @@ import TallyVotingSession from "./components/TallyVotingSession";
 
 function App() {
 
-  var Proposal = function (id, description, voteCount) {
-    this.id = id;
-    this.description = description;
-    this.voteCount = voteCount;
-  };
+
 
   const steps= [{
     title: 'Add Voter',
@@ -98,18 +89,7 @@ function App() {
         const listAddress = (await instance.getPastEvents('VoterRegistered', options)).map(voterEvent => voterEvent.returnValues.voterAddress);
         
 
-        const listProposalEvents = (await instance.getPastEvents('ProposalRegistered', options));
-        const listProposal = [];
-    
-    
-        listProposalEvents.forEach(async(indexProps) => 
-          { 
-            console.log(indexProps.returnValues.proposalId)
-            const proposal =  await instance.methods.getOneProposal(Number(indexProps.returnValues.proposalId)).call({ from: accounts[0]});
-            listProposal.push(new Proposal(Number(indexProps.returnValues.proposalId), proposal.description, proposal.voteCount ));
-            setState(s => ({...s, listProposal: listProposal}))
-            console.log(listProposal);
-          });
+
         // Set web3, accounts, and contract to the state, and then proceed with an
         // example of interacting with the contract's methods.
         setState({ steps: steps, owner: owner, voter: voter, workflowStatus: workflowStatus, listAddress: listAddress, listProposal: [], web3: web3, accounts: accounts, contract: instance, winningProposalID: winningProposalID });
@@ -119,15 +99,10 @@ function App() {
             let value = event.returnValues.voterAddress;
             console.log(value);
             //updateVoter(value);
-            //setSetEventValue(value);
+            setSetEventValue(value);
           })
 
-          instance.events.ProposalRegistered()
-          .on('data', event => {
-            let value = event.returnValues;
-            console.log(value);
-            //updateProposals(instance, value);
-          })
+  
 
           .on('changed', changed => console.log(changed))
           // .on('error', err => throw err)
@@ -154,16 +129,6 @@ function App() {
   }, [setEventValue])
 
 
-  const updateVoter = (voter) => {
-
-    const { accounts, contract, owner } = state;
-    console.log(state);
-    //listAddress.push(voter);
-    //console.log(listAddress);
-    //setState(s => ({...s, listAddress: listAddress}))
-
-  } 
-
   const goToNextStep = (methodToCall) => {
     methodToCall.send({ from: state.accounts[0] }).then( () => {
     const { accounts, contract, owner, listAddress } = state;
@@ -178,10 +143,10 @@ function App() {
   return (
     <div className="App">
     <div>
-        <h2 className="text-center">Système de Voting</h2>
+        <h2 className="text-center">Voting System</h2>
         <hr></hr>
         Account user : {state.accounts && state.accounts[0]}
-        { state.accounts && state.accounts[0] && state.accounts[0] == state.owner &&
+        { state.accounts && state.accounts[0] && state.accounts[0] === state.owner &&
           <h2>You are the contrat owner</h2>
         }
         { state.voter &&
@@ -214,7 +179,7 @@ function App() {
             <TallyVotingSession state={state} />
           </>
         )}
-        { state.accounts && state.accounts[0] && state.accounts[0] == state.owner && steps[state.workflowStatus]?.onClick && 
+        { state.accounts && state.accounts[0] && state.accounts[0] === state.owner && steps[state.workflowStatus]?.onClick && 
         <button type="button" onClick={ steps[state.workflowStatus ].onClick }>{ steps[state.workflowStatus ].buttonLabel}</button>
         }
         </div>

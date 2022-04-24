@@ -1,41 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import { Proposal } from '../Proposal';
 
-export default class VotingSession extends React.Component {
+function VotingSession ({
+    state
+}) {
+  const [stateProposal, setStateProposal] = useState({ listProposal: []});
+  const [setProposalEventValue, setSetProposalEventValue] = useState (0)
 
-    constructor(props) {
-        super(props);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        let options = {
+          fromBlock: 0,                  //Number || "earliest" || "pending" || "latest"
+          toBlock: 'latest'
+        };
+        const listProposalEvents = (await state.contract.getPastEvents('ProposalRegistered', options));
+        const listProposal = [];
+        listProposalEvents.forEach(async(indexProps) => 
+        { 
+          console.log(indexProps.returnValues.proposalId)
+          const proposal =  await state.contract.methods.getOneProposal(Number(indexProps.returnValues.proposalId)).call({ from: state.accounts[0]});
+          listProposal.push(new Proposal(Number(indexProps.returnValues.proposalId), proposal.description, proposal.voteCount ));
+          setStateProposal(s => ({...s, listProposal: listProposal}))
+          console.log(listProposal);
+        });
+
+        state.contract.events.ProposalRegistered()
+          .on('data', event => {
+            let value = event.returnValues.proposalId;
+            console.log(value);
+
+            state.contract.methods.getOneProposal(Number(value)).call({ from: state.accounts[0]}).then((proposal) => {
+              const newProps = new Proposal(Number(value), proposal.description, proposal.voteCount )
+              setSetProposalEventValue(newProps);
+            })
+          })
+
+        setStateProposal(s => ({...s, listProposal: listProposal}))
+      } catch (error) {
+        // Catch any errors for any of the above operations.
+        alert(
+          `Failed to init proposal component.`,
+        );
+        console.error(error);
+      }
+    })();
+  }, [])
+
+  useEffect(()=> {
+    console.log(stateProposal);
+    const { listProposal } = stateProposal;
+    listProposal.push(setProposalEventValue);
+    setStateProposal(s => ({...s, listProposal: listProposal}))
+  }, [setProposalEventValue])
 
 
-
-    }
-
-    setVote = async (e) => {
+    const setVote = async (e, index) => {
       e.preventDefault();
-      const { accounts, contract, owner, listAddress } = this.props.state;
-      let newProposalDesc = this.props.state.proposalId.value;
-      await contract.methods.setVote(newProposalDesc).send({ from: accounts[0] });
-
-
-    }
-
-    setVoteButton = async (e, index) => {
-      e.preventDefault();
-      const { accounts, contract, owner, listAddress } = this.props.state;
+      const { accounts, contract } = state;
       //let newProposalDesc = this.props.state.proposalId.value;
       await contract.methods.setVote(Number(index)).send({ from: accounts[0] });
-
-
+      stateProposal.listProposal[index].voteCount++;
+      setStateProposal(s => ({...s, listProposal: stateProposal.listProposal}))
     }
 
-    render(){
         return(
       <><div style={{ display: 'flex', justifyContent: 'center' }}>
-
             <Card style={{ width: '50rem' }}>
               <Card.Header><strong>Vote for a proposal</strong></Card.Header>
               <Card.Body>
@@ -51,9 +87,21 @@ export default class VotingSession extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {this.props.state.listProposal !== null &&
-                          this.props.state.listProposal.map((proposal) => (
-                            <tr><td>{proposal.id}</td><td>{proposal.description}</td><td>{proposal.voteCount}</td><td><Button onClick={(e) => this.setVoteButton(e, proposal.id)} variant="dark"> Voter </Button></td></tr>
+                        {stateProposal.listProposal !== null &&
+                          stateProposal.listProposal.map((proposal) => (
+                            <tr>
+                              <td>{proposal.id}</td>
+                              <td>{proposal.description}</td>
+                              <td>{proposal.voteCount}</td>
+                              <td>
+                              { state.voter && !state.voter.hasVoted &&
+                                    <Button onClick={(e) => setVote(e, proposal.id)} variant="dark"> Voter </Button>
+                              }
+                              { state.voter && state.voter.hasVoted && state.voter.votedProposalId == proposal.id &&
+                                <span>Vous avez vote pour cette proposition</span>
+                              }
+
+                              </td></tr>
                           ))}
                       </tbody>
                     </Table>
@@ -61,8 +109,9 @@ export default class VotingSession extends React.Component {
                 </ListGroup>
               </Card.Body>
             </Card>
-          </div></>
+          </div>
+          
+</>
         )
     }
-
-}
+    export default VotingSession;

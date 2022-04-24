@@ -45,7 +45,9 @@ export default class AddVoter extends React.Component {
                 </ListGroup>
               </Card.Body>
             </Card>
-          </div><br></br><div style={{ display: 'flex', justifyContent: 'center' }}>
+          </div><br></br>
+          { this.props.state.accounts && this.props.state.accounts[0] && this.props.state.accounts[0] === this.props.state.owner &&
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Card style={{ width: '50rem' }}>
                 <Card.Header><strong>Add a new Voter</strong></Card.Header>
                 <Card.Body>
@@ -57,7 +59,8 @@ export default class AddVoter extends React.Component {
                   <Button onClick={this.addVoter} variant="dark"> Autoriser </Button>
                 </Card.Body>
               </Card>
-            </div></>
+            </div>
+          }</>
         )
     }
 
